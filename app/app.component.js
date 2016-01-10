@@ -38,6 +38,7 @@ System.register(['angular2/core', './character/character.component'], function(e
                     this.isLoading = true;
                     UPDATE_PLOT();
                     this.isLoading = false;
+                    console.log(this.characterRows);
                 };
                 AppComponent = __decorate([
                     core_1.Component({

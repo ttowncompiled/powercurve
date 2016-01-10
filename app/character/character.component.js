@@ -1,4 +1,4 @@
-System.register(['angular2/core'], function(exports_1) {
+System.register(['angular2/core', 'angular2/common'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,23 +8,59 @@ System.register(['angular2/core'], function(exports_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1;
+    var core_1, common_1;
     var CharacterComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (common_1_1) {
+                common_1 = common_1_1;
             }],
         execute: function() {
             CharacterComponent = (function () {
-                function CharacterComponent() {
+                function CharacterComponent(fb) {
+                    this.myForm = fb.group({
+                        'team': [''],
+                        'name': [''],
+                        'lvl': [''],
+                        'vit': [''],
+                        'sta': [''],
+                        'srgn': [''],
+                        'aura': [''],
+                        'ardx': [''],
+                        'argn': [''],
+                        'form': [''],
+                        'def': [''],
+                        'atk': [''],
+                        'dmg': [''],
+                        'crit': [''],
+                        'str': [''],
+                        'dex': [''],
+                        'cont': [''],
+                        'int': [''],
+                        'wis': [''],
+                        'cha': [''],
+                        'ftd': [''],
+                        'rflx': [''],
+                        'will': ['']
+                    });
                 }
+                CharacterComponent.prototype.Save = function (value) {
+                    this.char['name'] = value['name'];
+                };
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', Object)
+                ], CharacterComponent.prototype, "char", void 0);
                 CharacterComponent = __decorate([
                     core_1.Component({
                         selector: 'character',
-                        templateUrl: 'app/character/character.html'
+                        templateUrl: 'app/character/character.html',
+                        directives: [common_1.FORM_DIRECTIVES]
                     }), 
-                    __metadata('design:paramtypes', [])
+                    __metadata('design:paramtypes', [common_1.FormBuilder])
                 ], CharacterComponent);
                 return CharacterComponent;
             })();

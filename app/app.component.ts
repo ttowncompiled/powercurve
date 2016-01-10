@@ -30,6 +30,7 @@ export class AppComponent {
     this.isLoading = true;
     UPDATE_PLOT();
     this.isLoading = false;
+    console.log(this.characterRows);
   }
 
 }

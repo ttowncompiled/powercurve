@@ -1,14 +1,14 @@
 <div class="card-panel">
   <div class="row">
     
-    <form class="col s12">
+    <form [ngFormModel]="myForm" (ngSubmit)="Save(myForm.value)" class="col s12">
       
       <!-- Player select -->
       <div class="section">
         <div class="row">
           <div class="input-field col s12">
-            <select class="browser-default">
-              <option value="" disabled selected>Choose</option>
+            <select [ngFormControl]="myForm.controls['team']" class="browser-default">
+              <option value="" disabled selected>Team</option>
               <option value="player">Player</option>
               <option value="opp">Opponent</option>
             </select>
@@ -22,12 +22,12 @@
       <div class="section">
         <div class="row">
           <div class="input-field col s12">
-            <input id="name" type="text" class="validate">
-            <label for="name">Name</label>
+            <input [ngFormControl]="myForm.controls['name']" id="name" type="text" class="validate">
+            <label for="name" [ngClass]="{active: myForm.controls['name'].value != ''}">Name</label>
           </div>
           <div class="input-field col s12">
-            <input id="level" type="text" class="validate">
-            <label for="level">Level</label>
+            <input [ngFormControl]="myForm.controls['lvl']" id="level" type="text" class="validate">
+            <label for="level" [ngClass]="{active: myForm.controls['lvl'].value != ''}">Level</label>
           </div>
         </div>
       </div>
@@ -39,28 +39,28 @@
         <h6>Stats</h6>
         <div class="row">
           <div class="input-field col s12">
-            <input id="vitality" type="text" class="validate">
-            <label for="vitality">Vitality</label>
+            <input [ngFormControl]="myForm.controls['vit']" id="vitality" type="text" class="validate">
+            <label for="vitality" [ngClass]="{active: myForm.controls['vit'].value != ''}">Vitality</label>
           </div>
           <div class="input-field col s12">
-            <input id="stamina" type="text" class="validate">
-            <label for="stamina">Stamina</label>
+            <input [ngFormControl]="myForm.controls['sta']" id="stamina" type="text" class="validate">
+            <label for="stamina" [ngClass]="{active: myForm.controls['sta'].value != ''}">Stamina</label>
           </div>
           <div class="input-field col s12">
-            <input id="stamina_regen" type="text" class="validate">
-            <label for="stamina_regen">Stamina Regen</label>
+            <input [ngFormControl]="myForm.controls['srgn']" id="stamina_regen" type="text" class="validate">
+            <label for="stamina_regen" [ngClass]="{active: myForm.controls['sreg'].value != ''}">Stamina Regen</label>
           </div>
           <div class="input-field col s12">
-            <input id="aura" type="text" class="validate">
-            <label for="aura">AURA</label>
+            <input [ngFormControl]="myForm.controls['aura']" id="aura" type="text" class="validate">
+            <label for="aura" [ngClass]="{active: myForm.controls['aura'].value != ''}">AURA</label>
           </div>
           <div class="input-field col s12">
-            <input id="aura_redux" type="text" class="validate">
-            <label for="aura_redux">AURA Redux</label>
+            <input [ngFormControl]="myForm.controls['ardx']" id="aura_redux" type="text" class="validate">
+            <label for="aura_redux" [ngClass]="{active: myForm.controls['ardx'].value != ''}">AURA Redux</label>
           </div>
           <div class="input-field col s12">
-            <input id="aura_regen" type="text" class="validate">
-            <label for="aura_regen">AURA Regen</label>
+            <input [ngFormControl]="myForm.controls['argn']" id="aura_regen" type="text" class="validate">
+            <label for="aura_regen" [ngClass]="{active: myForm.controls['areg'].value != ''}">AURA Regen</label>
           </div>
         </div>
       </div>
@@ -72,20 +72,27 @@
         <h6>Combat</h6>
         <div class="row">
           <div class="input-field col s12">
-            <input id="form" type="text" class="validate">
-            <label for="form">Form</label>
+            <select [ngFormControl]="myForm.controls['form']" class="browser-default">
+              <option value="" disabled selected>Form</option>
+              <option value="melee">Melee</option>
+              <option value="ranged">Ranged</option>
+            </select>
           </div>
           <div class="input-field col s12">
-            <input id="attack" type="text" class="validate">
-            <label for="attack">Attack</label>
+            <input [ngFormControl]="myForm.controls['def']" id="defense" type="text" class="validate">
+            <label for="defense" [ngClass]="{active: myForm.controls['def'].value != ''}">Defense</label>
           </div>
           <div class="input-field col s12">
-            <input id="damage" type="text" class="validate">
-            <label for="damage">Damage</label>
+            <input [ngFormControl]="myForm.controls['atk']" id="attack" type="text" class="validate">
+            <label for="attack" [ngClass]="{active: myForm.controls['atk'].value != ''}">Attack</label>
           </div>
           <div class="input-field col s12">
-            <input id="critical_chance" type="text" class="validate">
-            <label for="critical_chance">Critical Chance</label>
+            <input [ngFormControl]="myForm.controls['dmg']" id="damage" type="text" class="validate">
+            <label for="damage" [ngClass]="{active: myForm.controls['dmg'].value != ''}">Damage</label>
+          </div>
+          <div class="input-field col s12">
+            <input [ngFormControl]="myForm.controls['crit']" id="critical_chance" type="text" class="validate">
+            <label for="critical_chance" [ngClass]="{active: myForm.controls['crit'].value != ''}">Critical Chance</label>
           </div>
         </div>
       </div>
@@ -97,28 +104,28 @@
         <h6>Attributes</h6>
         <div class="row">
           <div class="input-field col s12">
-            <input id="strength" type="text" class="validate">
-            <label for="strength">Strength</label>
+            <input [ngFormControl]="myForm.controls['str']" id="strength" type="text" class="validate">
+            <label for="strength" [ngClass]="{active: myForm.controls['str'].value != ''}">Strength</label>
           </div>
           <div class="input-field col s12">
-            <input id="dexterity" type="text" class="validate">
-            <label for="dexterity">Dexterity</label>
+            <input [ngFormControl]="myForm.controls['dex']" id="dexterity" type="text" class="validate">
+            <label for="dexterity" [ngClass]="{active: myForm.controls['dex'].value != ''}">Dexterity</label>
           </div>
           <div class="input-field col s12">
-            <input id="constitution" type="text" class="validate">
-            <label for="constitution">Consitution</label>
+            <input [ngFormControl]="myForm.controls['cont']" id="constitution" type="text" class="validate">
+            <label for="constitution" [ngClass]="{active: myForm.controls['cont'].value != ''}">Consitution</label>
           </div>
           <div class="input-field col s12">
-            <input id="intelligence" type="text" class="validate">
-            <label for="intelligence">Intelligence</label>
+            <input [ngFormControl]="myForm.controls['int']" id="intelligence" type="text" class="validate">
+            <label for="intelligence" [ngClass]="{active: myForm.controls['int'].value != ''}">Intelligence</label>
           </div>
           <div class="input-field col s12">
-            <input id="wisdom" type="text" class="validate">
-            <label for="wisdom">Wisdom</label>
+            <input [ngFormControl]="myForm.controls['wis']" id="wisdom" type="text" class="validate">
+            <label for="wisdom" [ngClass]="{active: myForm.controls['wis'].value != ''}">Wisdom</label>
           </div>
           <div class="input-field col s12">
-            <input id="charisma" type="text" class="validate">
-            <label for="charisma">Charisma</label>
+            <input [ngFormControl]="myForm.controls['cha']" id="charisma" type="text" class="validate">
+            <label for="charisma" [ngClass]="{active: myForm.controls['cha'].value != ''}">Charisma</label>
           </div>
         </div>
       </div>
@@ -130,16 +137,16 @@
         <h6>Saving Throws</h6>
         <div class="row">
           <div class="input-field col s12">
-            <input id="fortitude" type="text" class="validate">
-            <label for="fortitude">Fortitude</label>
+            <input [ngFormControl]="myForm.controls['ftd']" id="fortitude" type="text" class="validate">
+            <label for="fortitude" [ngClass]="{active: myForm.controls['ftd'].value != ''}">Fortitude</label>
           </div>
           <div class="input-field col s12">
-            <input id="reflex" type="text" class="validate">
-            <label for="reflex">Reflex</label>
+            <input [ngFormControl]="myForm.controls['rflx']" id="reflex" type="text" class="validate">
+            <label for="reflex" [ngClass]="{active: myForm.controls['rflx'].value != ''}">Reflex</label>
           </div>
           <div class="input-field col s12">
-            <input id="will" type="text" class="validate">
-            <label for="will">Will</label>
+            <input [ngFormControl]="myForm.controls['will']" id="will" type="text" class="validate">
+            <label for="will" [ngClass]="{active: myForm.controls['will'].value != ''}">Will</label>
           </div>
         </div>
       </div>
@@ -150,7 +157,7 @@
       <div class="section">
         <div class="row valign-wrapper">
           <div class="valign" style="margin: 0 auto;">
-            <a class="btn waves-effect waves-light">Save</a>
+            <button type="submit" class="btn waves-effect waves-light">Save</button>
           </div>
         </div>
       </div>

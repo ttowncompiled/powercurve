@@ -56,7 +56,7 @@
   
   <!-- Character panel -->
   <div *ngFor="#c of characters" class="col s4">
-    <character>Loading...</character>
+    <character [char]="c">Loading...</character>
   </div>
   
   <!-- New character panel -->
