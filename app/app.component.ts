@@ -68,8 +68,7 @@ export class AppComponent {
     var worker: any = new Worker('app/lib/simulation.js');
     worker.postMessage([this.Player(), this.Opps(), this.Params()]);
     worker.onmessage = (results: any) => {
-      console.log('result received');
-      UPDATE_PLOT();
+      UPDATE_PLOT(results.data);
       this.isLoading = false;
       this.ref.detectChanges();
     }

@@ -73,7 +73,7 @@ System.register(['angular2/core', './character/character.component'], function(e
                     var worker = new Worker('app/lib/simulation.js');
                     worker.postMessage([this.Player(), this.Opps(), this.Params()]);
                     worker.onmessage = function (results) {
-                        UPDATE_PLOT();
+                        UPDATE_PLOT(results.data);
                         _this.isLoading = false;
                         _this.ref.detectChanges();
                     };

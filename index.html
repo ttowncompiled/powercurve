@@ -24,8 +24,8 @@
     <script>
       
       // DOM function for manipulating the plot
-      function UPDATE_PLOT() {
-        $.plot($("#placeholder"), [ [[-5, 0], [-4, 0], [-3, 0.1], [-2, 0.2], [-1, 0.3], [0, 0.4], [1, 0.6], [2, 0.8], [3, 0.9], [4, 1], [5, 1]] ], { yaxis: { max: 1 } });
+      function UPDATE_PLOT(data) {
+        $.plot($("#placeholder"), [ data ], { yaxis: { max: 1 } });
       }
       
       // configurations for importing  modules through System.js
