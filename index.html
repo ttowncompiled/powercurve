@@ -25,7 +25,50 @@
       
       // DOM function for manipulating the plot
       function UPDATE_PLOT(data) {
-        $.plot($("#placeholder"), [ data ], { yaxis: { max: 1 } });
+        // plots the data
+        $.plot($("#placeholder"),
+          [ data ],
+          {
+            series: {
+              lines: {
+                show: true
+              },
+              points: {
+                show: true
+              }
+            },
+            grid: {
+              hoverable: true,
+              clickable: true
+            },
+            yaxis: {
+              min: 0,
+              max: 1
+            }
+          });
+
+        // creates the tooltip to display the y point
+        $("<div id='tooltip'></div>").css({
+            position: "absolute",
+            display: "none",
+            border: "1px solid #fdd",
+            padding: "2px",
+            "background-color": "#fee",
+            opacity: 0.80
+          }).appendTo("body");
+
+        // displays the tooltip on hover
+        $("#placeholder").bind("plothover", function (event, pos, item) {
+              if (item) {
+                var x = item.datapoint[0].toFixed(2),
+                  y = item.datapoint[1].toFixed(2);
+                $("#tooltip").html(y)
+                  .css({top: item.pageY+5, left: item.pageX+5})
+                  .fadeIn(200);
+              } else {
+                $("#tooltip").hide();
+              }
+          });
       }
       
       // configurations for importing  modules through System.js
