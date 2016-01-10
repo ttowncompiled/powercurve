@@ -16,11 +16,19 @@
     <script src="node_modules/flot/jquery.flot.js"></script>
     
     <!-- Materialize -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="node_modules/materialize-css/dist/css/materialize.css" media="screen,projection">
     <script src="node_modules/materialize-css/dist/js/materialize.js"></script>
     
     <!-- Load bootstrap file -->
     <script>
+      
+      // DOM function for manipulating the plot
+      function UPDATE_PLOT() {
+        $.plot($("#placeholder"), [ [[-5, 0], [-4, 0], [-3, 0.1], [-2, 0.2], [-1, 0.3], [0, 0.4], [1, 0.6], [2, 0.8], [3, 0.9], [4, 1], [5, 1]] ], { yaxis: { max: 1 } });
+      }
+      
+      // configurations for importing  modules through System.js
       System.config({
         packages: {        
           app: {
@@ -29,8 +37,11 @@
           }
         }
       });
+      
+      // import the boot module to bootstrap all of the components
       System.import('app/boot')
             .then(null, console.error.bind(console));
+            
     </script>
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -52,10 +63,14 @@
       
       <!-- Power curve plot -->
       <div class="card-panel hoverable">
-        <div class="placeholder" style="width:100%;height:60%"></div>
+        <div id="placeholder" style="width:100%;height:60%;"></div>
       </div>
       
       <!-- App -->
+      <div>
+        <my-app>Loading...</my-app>  
+      </div>
+      
     </div>
     
   </body>

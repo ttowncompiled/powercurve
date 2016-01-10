@@ -19,6 +19,10 @@ System.register(['angular2/core'], function(exports_1) {
             AppComponent = (function () {
                 function AppComponent() {
                 }
+                // updates the plot with new data
+                AppComponent.prototype.UpdatePlot = function () {
+                    UPDATE_PLOT();
+                };
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'my-app',
