@@ -11,6 +11,7 @@ declare var UPDATE_PLOT;
 export class AppComponent {
   
   characterRows: Array<Array<any>> = [];
+  isLoading: boolean = false;
   
   // adds a character panel to the page
   AddCharacter(): void {
@@ -24,7 +25,9 @@ export class AppComponent {
   
   // updates the plot with new data
   UpdatePlot(): void {
+    this.isLoading = true;
     UPDATE_PLOT();
+    this.isLoading = false;
   }
 
 }

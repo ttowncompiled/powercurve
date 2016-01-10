@@ -19,6 +19,7 @@ System.register(['angular2/core'], function(exports_1) {
             AppComponent = (function () {
                 function AppComponent() {
                     this.characterRows = [];
+                    this.isLoading = false;
                 }
                 // adds a character panel to the page
                 AppComponent.prototype.AddCharacter = function () {
@@ -31,7 +32,9 @@ System.register(['angular2/core'], function(exports_1) {
                 };
                 // updates the plot with new data
                 AppComponent.prototype.UpdatePlot = function () {
+                    this.isLoading = true;
                     UPDATE_PLOT();
+                    this.isLoading = false;
                 };
                 AppComponent = __decorate([
                     core_1.Component({
