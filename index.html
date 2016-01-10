@@ -2,16 +2,24 @@
   
   <head>
     <title>Power Curves</title>
+    
+    <!-- Load Dependencies -->
+    
+    <!-- Angular 2.1 beta -->
     <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
     <script src="node_modules/systemjs/dist/system.src.js"></script>
     <script src="node_modules/rxjs/bundles/Rx.js"></script>
     <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
+    
+    <!-- Flot -->
     <script src="node_modules/flot/jquery.js"></script>
     <script src="node_modules/flot/jquery.flot.js"></script>
     
+    <!-- Materialize -->
     <link type="text/css" rel="stylesheet" href="node_modules/materialize-css/dist/css/materialize.css" media="screen,projection">
     <script src="node_modules/materialize-css/dist/js/materialize.js"></script>
     
+    <!-- Load bootstrap file -->
     <script>
       System.config({
         packages: {        
@@ -29,13 +37,27 @@
   </head>
   
   <body>
-    <div style="margin-top:15px" class="container">
-      <div id="placeholder" style="width:90%;height:60%"></div>
+    
+    <!-- Nav bar -->
+    <nav>
+      <div class="nav-wrapper amber">
+        <span class="brand-logo" style="margin-left:5px">Plot Curves</span>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a href="#">Curves</a></li>
+        </ul>
+      </div>
+    </nav>
+    
+    <div class="container">
+      
+      <!-- Power curve plot -->
+      <div class="card-panel hoverable">
+        <div class="placeholder" style="width:100%;height:60%"></div>
+      </div>
+      
+      <!-- App -->
     </div>
-    <script>
-      $.plot($("#placeholder"), [ [[0, 0], [1, 1]] ], { yaxis: { max: 1 } });
-    </script>
-    <my-app>Loading...</my-app>
+    
   </body>
   
 </html>
