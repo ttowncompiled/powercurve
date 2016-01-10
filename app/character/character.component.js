@@ -47,8 +47,10 @@ System.register(['angular2/core', 'angular2/common'], function(exports_1) {
                         'will': ['']
                     });
                 }
-                CharacterComponent.prototype.Save = function (value) {
-                    this.char['name'] = value['name'];
+                CharacterComponent.prototype.Save = function (formValue) {
+                    for (var key in formValue) {
+                        this.char[key] = formValue[key];
+                    }
                 };
                 __decorate([
                     core_1.Input(), 

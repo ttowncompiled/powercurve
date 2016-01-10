@@ -20,10 +20,43 @@ System.register(['angular2/core', './character/character.component'], function(e
             }],
         execute: function() {
             AppComponent = (function () {
-                function AppComponent() {
+                function AppComponent(ref) {
+                    this.ref = ref;
                     this.characterRows = [];
                     this.isLoading = false;
                 }
+                // returns the opponents from the listed characters
+                AppComponent.prototype.Opps = function () {
+                    var opps = [];
+                    for (var i = 0; i < this.characterRows.length; i++) {
+                        for (var j = 0; j < this.characterRows[i].length; j++) {
+                            if (this.characterRows[i][j]['team'] == 'opp') {
+                                opps.push(this.characterRows[i][j]);
+                            }
+                        }
+                    }
+                    return opps;
+                };
+                // returns the simulation parameters
+                AppComponent.prototype.Params = function () {
+                    return {
+                        'iters': 10,
+                        'lvl-under': 5,
+                        'lvl': 6,
+                        'lvl-over': 5
+                    };
+                };
+                // returns the player from the listed characters
+                AppComponent.prototype.Player = function () {
+                    for (var i = 0; i < this.characterRows.length; i++) {
+                        for (var j = 0; j < this.characterRows[i].length; j++) {
+                            if (this.characterRows[i][j]['team'] == 'player') {
+                                return this.characterRows[i][j];
+                            }
+                        }
+                    }
+                    return {};
+                };
                 // adds a character panel to the page
                 AppComponent.prototype.AddCharacter = function () {
                     var length = this.characterRows.length;
@@ -35,10 +68,15 @@ System.register(['angular2/core', './character/character.component'], function(e
                 };
                 // updates the plot with new data
                 AppComponent.prototype.UpdatePlot = function () {
+                    var _this = this;
                     this.isLoading = true;
-                    UPDATE_PLOT();
-                    this.isLoading = false;
-                    console.log(this.characterRows);
+                    var worker = new Worker('app/lib/simulation.js');
+                    worker.postMessage([this.Player(), this.Opps(), this.Params()]);
+                    worker.onmessage = function (results) {
+                        UPDATE_PLOT();
+                        _this.isLoading = false;
+                        _this.ref.detectChanges();
+                    };
                 };
                 AppComponent = __decorate([
                     core_1.Component({
@@ -46,7 +84,7 @@ System.register(['angular2/core', './character/character.component'], function(e
                         templateUrl: 'app/app.html',
                         directives: [character_component_1.CharacterComponent]
                     }), 
-                    __metadata('design:paramtypes', [])
+                    __metadata('design:paramtypes', [core_1.ChangeDetectorRef])
                 ], AppComponent);
                 return AppComponent;
             })();
