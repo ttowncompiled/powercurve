@@ -55,7 +55,7 @@ export class AppComponent {
   // adds a character panel to the page
   AddCharacter(): void {
     var length: number = this.characterRows.length;
-    if (length == 0 || this.characterRows[length-1].length == 3) {
+    if (length == 0 || this.characterRows[length-1].length == 4) {
       this.characterRows.push([{}]);
       return;
     }

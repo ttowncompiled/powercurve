@@ -1,7 +1,7 @@
 <html>
   
   <head>
-    <title>Power Curves</title>
+    <title>Power Curve</title>
     
     <!-- Load Dependencies -->
     
@@ -52,25 +52,72 @@
     <!-- Nav bar -->
     <nav>
       <div class="nav-wrapper amber">
-        <span class="brand-logo" style="margin-left:5px">Plot Curves</span>
+        <span class="brand-logo" style="margin-left:5px">Combat Power Curve</span>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li><a href="#">Curves</a></li>
+          <li><a href="#">Combat</a></li>
         </ul>
       </div>
     </nav>
     
-    <div class="container">
-      
-      <!-- Power curve plot -->
-      <div class="card-panel hoverable">
-        <div id="placeholder" style="width:100%;height:60%;"></div>
+    <!-- Plot -->
+    <div class="section">
+      <div class="row">
+        
+        <!-- Diagram -->
+        <div class="col s10">
+          <div class="card-panel hoverable" style="height:80%;">
+            <div id="placeholder" style="width:100%;height:100%;"></div>
+          </div>
+        </div>
+        
+        <!-- parameters -->
+        <div class="col s2">
+          <div class="card-panel" style="height:80%;">
+            <div class="row">
+              <form class="col s12">
+                
+                <div class="section">
+                  <h6>Parameters</h6>
+                </div>
+                
+                <div class="divider"></div>
+                
+                <div class="section">
+                  <div class="row">
+                    <div class="input-field s12">
+                      <input id="iterations" type="text" class="validate">
+                      <label for="iterations">Iterations</label>
+                    </div>
+                    <div class="input-field s12">
+                      <input id="lvl-under" type="text" class="validate">
+                      <label for="lvl-under">Level Under</label>
+                    </div>
+                    <div class="input-field s12">
+                      <input id="lvl" type="text" class="validate">
+                      <label for="lvl">Level</label>
+                    </div>
+                    <div class="input-field s12">
+                      <input id="lvl-over" type="text" class="validate">
+                      <label for="lvl-over">Level Over</label>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="divider"></div>
+                
+              </form>
+            </div>
+          </div>
+        </div>
+
       </div>
-      
-      <!-- App -->
-      <div>
-        <my-app>Loading...</my-app>  
-      </div>
-      
+    </div>
+    
+    <div class="divider"></div>
+    
+    <!-- App -->
+    <div class="section">
+      <my-app>Loading...</my-app>
     </div>
     
   </body>

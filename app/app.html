@@ -55,12 +55,12 @@
 <div *ngFor="#characters of characterRows" class="row">
   
   <!-- Character panel -->
-  <div *ngFor="#c of characters" class="col s4">
+  <div *ngFor="#c of characters" class="col s3">
     <character [char]="c">Loading...</character>
   </div>
   
   <!-- New character panel -->
-  <div *ngIf="characters.length < 3" class="col s4">
+  <div *ngIf="characters.length < 4" class="col s3">
     <div class="card-panel valign-wrapper grey lighten-4" style="height:250px;">
       <div class="valign" style="margin: 0 auto;">
         <a class="btn-large btn-floating waves-effect waves-light grey lighten-1" (click)="AddCharacter()">
@@ -73,8 +73,8 @@
 </div>
 
 <!-- New character panel -->
-<div *ngIf="characterRows.length == 0 || characterRows[characterRows.length-1].length == 3" class="row">
-  <div class="col s4">
+<div *ngIf="characterRows.length == 0 || characterRows[characterRows.length-1].length == 4" class="row">
+  <div class="col s3">
     <div class="card-panel valign-wrapper grey lighten-4" style="height:250px;">
       <div class="valign" style="margin: 0 auto;">
         <a class="btn-large btn-floating waves-effect waves-light grey lighten-1" (click)="AddCharacter()">

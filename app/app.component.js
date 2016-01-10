@@ -60,7 +60,7 @@ System.register(['angular2/core', './character/character.component'], function(e
                 // adds a character panel to the page
                 AppComponent.prototype.AddCharacter = function () {
                     var length = this.characterRows.length;
-                    if (length == 0 || this.characterRows[length - 1].length == 3) {
+                    if (length == 0 || this.characterRows[length - 1].length == 4) {
                         this.characterRows.push([{}]);
                         return;
                     }
