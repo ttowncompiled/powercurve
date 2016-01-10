@@ -8,10 +8,34 @@
     <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
     <script src="node_modules/flot/jquery.js"></script>
     <script src="node_modules/flot/jquery.flot.js"></script>
+    
+    <link type="text/css" rel="stylesheet" href="node_modules/materialize-css/dist/css/materialize.css" media="screen,projection">
+    <script src="node_modules/materialize-css/dist/js/materialize.js"></script>
+    
+    <script>
+      System.config({
+        packages: {        
+          app: {
+            format: 'register',
+            defaultExtension: 'js'
+          }
+        }
+      });
+      System.import('app/boot')
+            .then(null, console.error.bind(console));
+    </script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   </head>
   
   <body>
-    Hello World
+    <div style="margin-top:15px" class="container">
+      <div id="placeholder" style="width:90%;height:60%"></div>
+    </div>
+    <script>
+      $.plot($("#placeholder"), [ [[0, 0], [1, 1]] ], { yaxis: { max: 1 } });
+    </script>
+    <my-app>Loading...</my-app>
   </body>
   
 </html>
