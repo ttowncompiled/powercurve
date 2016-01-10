@@ -10,6 +10,18 @@ declare var UPDATE_PLOT;
 })
 export class AppComponent {
   
+  characterRows: Array<Array<any>> = [];
+  
+  // adds a character panel to the page
+  AddCharacter(): void {
+    var length: number = this.characterRows.length;
+    if (length == 0 || this.characterRows[length-1].length == 3) {
+      this.characterRows.push([{}]);
+      return;
+    }
+    this.characterRows[length-1].push({});
+  }
+  
   // updates the plot with new data
   UpdatePlot(): void {
     UPDATE_PLOT();

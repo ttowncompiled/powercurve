@@ -18,7 +18,17 @@ System.register(['angular2/core'], function(exports_1) {
         execute: function() {
             AppComponent = (function () {
                 function AppComponent() {
+                    this.characterRows = [];
                 }
+                // adds a character panel to the page
+                AppComponent.prototype.AddCharacter = function () {
+                    var length = this.characterRows.length;
+                    if (length == 0 || this.characterRows[length - 1].length == 3) {
+                        this.characterRows.push([{}]);
+                        return;
+                    }
+                    this.characterRows[length - 1].push({});
+                };
                 // updates the plot with new data
                 AppComponent.prototype.UpdatePlot = function () {
                     UPDATE_PLOT();
