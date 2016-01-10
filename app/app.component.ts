@@ -1,4 +1,5 @@
 import {Component} from 'angular2/core';
+import {CharacterComponent} from './character/character.component';
 
 // declare UPDATE_PLOT to be able to use this function 
 // to update the plot with new data
@@ -6,7 +7,8 @@ declare var UPDATE_PLOT;
 
 @Component({
   selector: 'my-app',
-  templateUrl: 'app/app.html'
+  templateUrl: 'app/app.html',
+  directives: [CharacterComponent]
 })
 export class AppComponent {
   
