@@ -55,7 +55,7 @@
 <div class="col s2">
   <div class="card-panel" style="height:80%;">
     <div class="row">
-      <form class="col s12">
+      <form [ngFormModel]="params" class="col s12">
         
         <div class="section">
           <h6>Parameters</h6>
@@ -66,19 +66,19 @@
         <div class="section">
           <div class="row">
             <div class="input-field s12">
-              <input id="iterations" type="text" class="validate" value="100">
+              <input [ngFormControl]="params.controls['iters']" id="iterations" type="text" class="validate">
               <label for="iterations" class="active">Iterations</label>
             </div>
             <div class="input-field s12">
-              <input id="lvl-under" type="text" class="validate" value="5">
+              <input [ngFormControl]="params.controls['lvl-under']" id="lvl-under" type="text" class="validate">
               <label for="lvl-under" class="active">Level Under</label>
             </div>
             <div class="input-field s12">
-              <input id="lvl" type="text" class="validate" value="6">
+              <input [ngFormControl]="params.controls['lvl']" id="lvl" type="text" class="validate">
               <label for="lvl" class="active">Level</label>
             </div>
             <div class="input-field s12">
-              <input id="lvl-over" type="text" class="validate" value="5">
+              <input [ngFormControl]="params.controls['lvl-over']" id="lvl-over" type="text" class="validate">
               <label for="lvl-over" class="active">Level Over</label>
             </div>
           </div>

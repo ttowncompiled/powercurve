@@ -1,4 +1,5 @@
 import {ChangeDetectorRef , Component} from 'angular2/core';
+import {FORM_DIRECTIVES, ControlGroup, FormBuilder} from 'angular2/common';
 import {CharacterComponent} from './character/character.component';
 
 // declare UPDATE_PLOT to be able to use this function 
@@ -8,14 +9,22 @@ declare var UPDATE_PLOT;
 @Component({
   selector: 'my-app',
   templateUrl: 'app/app.html',
-  directives: [CharacterComponent]
+  directives: [FORM_DIRECTIVES, CharacterComponent]
 })
 export class AppComponent {
   
   characterRows: Array<Array<any>> = [];
   isLoading: boolean = false;
+  params: ControlGroup;
   
-  constructor(private ref: ChangeDetectorRef) {}
+  constructor(private ref: ChangeDetectorRef, fb: FormBuilder) {
+    this.params = fb.group({
+      'iters': [100],
+      'lvl-under': [5],
+      'lvl': [6],
+      'lvl-over': [5]
+    });
+  }
   
   // returns the opponents from the listed characters
   private Opps(): Array<any> {
@@ -28,16 +37,6 @@ export class AppComponent {
       }
     }
     return opps;
-  }
-  
-  // returns the simulation parameters
-  private Params(): any {
-    return {
-      'iters': 10,
-      'lvl-under': 5,
-      'lvl': 6,
-      'lvl-over': 5
-    };
   }
   
   // returns the player from the listed characters
@@ -66,7 +65,7 @@ export class AppComponent {
   UpdatePlot(): void {
     this.isLoading = true;
     var worker: any = new Worker('app/lib/simulation.js');
-    worker.postMessage([this.Player(), this.Opps(), this.Params()]);
+    worker.postMessage([this.Player(), this.Opps(), this.params.value]);
     worker.onmessage = (results: any) => {
       UPDATE_PLOT(results.data);
       this.isLoading = false;
