@@ -11,8 +11,13 @@ function MakeSavingThrow(die, save, check) {
 
 function ApplyDamage(attacker, defender, isCrit) {
   // damage vs aura vs vitality
-  var roll = RollDie(attacker['dmg']['die']);
-  var damage = attacker['dmg']['mult'] * roll + attacker['dmg']['mod'];
+  var damage;
+  if (typeof attacker['dmg'] == 'number') {
+    damage = attacker['dmg'];
+  } else {
+    var roll = RollDie(attacker['dmg']['die']);
+    damage = attacker['dmg']['mult'] * roll + attacker['dmg']['mod'];
+  }
   if (damage > defender['ardx']) {
     defender['vit'] -= (damage - defender['ardx']);
     damage = defender['ardx'];
@@ -26,6 +31,12 @@ function ApplyDamage(attacker, defender, isCrit) {
 }
 
 function MeleeAttack(attacker, defender) {
+  if (typeof attacker['atk'] == 'number') {
+    if (attacker['atk']['mult'] > defender['def']) {
+      ApplyDamage(attacker, defender, RollDie(20) > 20 - attacker['crit']);
+    }
+    return;
+  }
   var roll = RollDie(attacker['atk']['die']);
   if (roll == 1) return;
   if (roll >= 20 - attacker['crit']) ApplyDamage(attacker, defender, true);
@@ -36,6 +47,12 @@ function MeleeAttack(attacker, defender) {
 }
 
 function RangedAttack(attacker, defender) {
+  if (typeof attacker['atk'] == 'number') {
+    if (attacker['atk']['mult'] > defender['def']) {
+      ApplyDamage(attacker, defender, RollDie(20) > 20 - attacker['crit']);
+    }
+    return;
+  }
   var roll = RollDie(attacker['atk']['die']);
   if (roll == 1) return;
   if (roll >= 20 - attacker['crit']) ApplyDamage(attacker, defender, true);
