@@ -15,7 +15,15 @@ export class CharacterComponent {
     this.myForm = fb.group({
       'team': [''],
       'name': [''],
-      'lvl': [''],
+      'str': ['10'],
+      'dex': ['10'],
+      'cont': ['10'],
+      'int': ['10'],
+      'wis': ['10'],
+      'cha': ['10'],
+      'ftd': [''],
+      'rflx': [''],
+      'will': [''],
       'vit': [''],
       'sta': [''],
       'srgn': [''],
@@ -26,16 +34,7 @@ export class CharacterComponent {
       'def': [''],
       'atk': [''],
       'dmg': [''],
-      'crit': [''],
-      'str': [''],
-      'dex': [''],
-      'cont': [''],
-      'int': [''],
-      'wis': [''],
-      'cha': [''],
-      'ftd': [''],
-      'rflx': [''],
-      'will': ['']
+      'crit': ['']
     });
   }
   

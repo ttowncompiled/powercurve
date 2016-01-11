@@ -24,7 +24,15 @@ System.register(['angular2/core', 'angular2/common'], function(exports_1) {
                     this.myForm = fb.group({
                         'team': [''],
                         'name': [''],
-                        'lvl': [''],
+                        'str': ['10'],
+                        'dex': ['10'],
+                        'cont': ['10'],
+                        'int': ['10'],
+                        'wis': ['10'],
+                        'cha': ['10'],
+                        'ftd': [''],
+                        'rflx': [''],
+                        'will': [''],
                         'vit': [''],
                         'sta': [''],
                         'srgn': [''],
@@ -35,16 +43,7 @@ System.register(['angular2/core', 'angular2/common'], function(exports_1) {
                         'def': [''],
                         'atk': [''],
                         'dmg': [''],
-                        'crit': [''],
-                        'str': [''],
-                        'dex': [''],
-                        'cont': [''],
-                        'int': [''],
-                        'wis': [''],
-                        'cha': [''],
-                        'ftd': [''],
-                        'rflx': [''],
-                        'will': ['']
+                        'crit': ['']
                     });
                 }
                 CharacterComponent.prototype.Save = function (formValue) {
