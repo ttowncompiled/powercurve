@@ -31,7 +31,7 @@ System.register(['angular2/core', 'angular2/common', './character/character.comp
                     this.characterRows = [];
                     this.isLoading = false;
                     this.params = fb.group({
-                        'iters': [100],
+                        'iters': [5000],
                         'lvl-under': [5],
                         'lvl': [6],
                         'lvl-over': [5]

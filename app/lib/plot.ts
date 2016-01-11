@@ -35,8 +35,7 @@ export function PlotData(data: Array<any>): void {
       data,
       {
         legend: {
-          container: $("#legend"),
-          noColumns: 2
+          container: $("#legend")
         },
         series: {
           lines: {

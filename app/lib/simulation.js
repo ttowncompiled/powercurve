@@ -25,7 +25,7 @@ function ApplyDamage(attacker, defender, isCrit) {
   defender['aura'] -= damage;
 }
 
-function CheckMeleeAttack(attacker, defender) {
+function MeleeAttack(attacker, defender) {
   var roll = RollDie(attacker['atk']['die']);
   if (roll == 1) return;
   if (roll >= 20 - attacker['crit']) ApplyDamage(attacker, defender, true);
@@ -35,7 +35,7 @@ function CheckMeleeAttack(attacker, defender) {
   }
 }
 
-function CheckRangedAttack(attacker, defender) {
+function RangedAttack(attacker, defender) {
   var roll = RollDie(attacker['atk']['die']);
   if (roll == 1) return;
   if (roll >= 20 - attacker['crit']) ApplyDamage(attacker, defender, true);
@@ -52,8 +52,8 @@ function RollForInitiative() {
 }
 
 function Attack(attacker, defender) {
-  if (attacker['form'] == 'melee') CheckMeleeAttack(attacker, defender);
-  if (attacker['form'] == 'ranged') CheckRangedAttack(attacker, defender);
+  if (attacker['form'] == 'melee') MeleeAttack(attacker, defender);
+  if (attacker['form'] == 'ranged') RangedAttack(attacker, defender);
   // return true if the defender's vitality was reduced to 0 by the attack
   return defender['vit'] <= 0;
 }
@@ -179,12 +179,13 @@ function ComputeStatTemplate(template, builder, level) {
       }
       operators.push(terms[t]);
     } else {
-      stack.push(EvaluateTerm(terms[t], builder, level), die);
+      stack.push(EvaluateTerm(terms[t], builder, level, die));
     }
   }
   while (operators.length > 0) {
     stack.push(Compute(stack.pop(), stack.pop(), operators.pop(), die));
   }
+  if (stack[stack.length-1] == 'die') return die;
   return stack.pop();
 }
 
@@ -217,14 +218,12 @@ function BaseLine(character, params) {
 }
 
 function CalculateBaseLines(player, opps, params) {
-  var results = {data: [], labels: []};
+  var results = [];
   var pbl = BaseLine(player, params);
-  results['data'].push(pbl['data']);
-  results['labels'].push(pbl['label']);
+  results.push(pbl);
   opps.forEach(function(o) {
     var obl = BaseLine(o, params);
-    results['data'].push(obl['data']);
-    results['labels'].push(obl['label']);
+    results.push(obl);
   });
   return results;
 }
@@ -247,11 +246,10 @@ function PowerCurve(left, right, params) {
 }
 
 function CalculatePowerCurves(player, opps, params) {
-  var results = {data: [], labels: []};
+  var results = [];
   opps.forEach(function(o) {
     var curve = PowerCurve(player, o, params);
-    results['data'].push(curve['data']);
-    results['labels'].push(curve['label']);
+    results.push(curve);
   });
   return results;
 }
@@ -259,10 +257,7 @@ function CalculatePowerCurves(player, opps, params) {
 function Simulate(player, opps, params) {
   var baseLines = CalculateBaseLines(player, opps, params);
   var powerCurves = CalculatePowerCurves(player, opps, params);
-  return {
-    data: [baseLines['data'].concat(powerCurves['data'])],
-    labels: [baseLines['labels'].concat(powerCurves['labels'])]
-  };
+  return baseLines.concat(powerCurves);
 }
 
 onmessage = function(deps) {

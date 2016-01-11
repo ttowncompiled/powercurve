@@ -16,7 +16,7 @@ export class AppComponent {
   
   constructor(private ref: ChangeDetectorRef, fb: FormBuilder) {
     this.params = fb.group({
-      'iters': [100],
+      'iters': [5000],
       'lvl-under': [5],
       'lvl': [6],
       'lvl-over': [5]

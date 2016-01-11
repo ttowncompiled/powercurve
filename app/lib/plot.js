@@ -31,8 +31,7 @@ System.register([], function(exports_1) {
     function PlotData(data) {
         $.plot($("#placeholder"), data, {
             legend: {
-                container: $("#legend"),
-                noColumns: 2
+                container: $("#legend")
             },
             series: {
                 lines: {
