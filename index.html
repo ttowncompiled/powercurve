@@ -29,6 +29,10 @@
         $.plot($("#placeholder"),
             annotated_data,
             {
+              legend: {
+                container: $("#legend"),
+                noColumns: 2
+              },
               series: {
                 lines: {
                   show: true
@@ -70,6 +74,9 @@
               $("#tooltip").hide();
             }
         });
+        
+        // enable side nav for the legend
+        $('.button-collapse').sideNav();
       }
       
       // configurations for importing  modules through System.js
@@ -95,12 +102,23 @@
     
     <!-- Nav bar -->
     <nav>
+      <!-- Top bar for title and nav links -->
       <div class="nav-wrapper amber">
         <span class="brand-logo" style="margin-left:5px">Combat Power Curve</span>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
           <li><a href="#">Combat</a></li>
         </ul>
       </div>
+      <!-- Side nav for the plot legend -->
+      <ul id="slide-out" class="side-nav">
+        <div class="container">
+          <div class="row">
+            <div class="col s3">
+              <div id="legend"></div>
+            </div>
+          </div>
+        </div>
+      </ul>
     </nav>
     
     <!-- Plot -->
@@ -114,7 +132,7 @@
           </div>
         </div>
         
-        <!-- parameters -->
+        <!-- Parameters -->
         <div class="col s2">
           <div class="card-panel" style="height:80%;">
             <div class="row">
@@ -149,13 +167,17 @@
                 
                 <div class="divider"></div>
                 
+                <div class="section">
+                  <a href="#" data-activates="slide-out" class="button-collapse">Legend</a>
+                </div>
+                
               </form>
             </div>
           </div>
         </div>
 
       </div>
-    </div>
+    </div>  
     
     <div class="divider"></div>
     
@@ -163,6 +185,10 @@
     <div class="section">
       <my-app>Loading...</my-app>
     </div>
+    
+    <script>
+      
+    </script>
     
   </body>
   
