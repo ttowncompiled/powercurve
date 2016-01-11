@@ -1,5 +1,5 @@
 function RollDie(die) {
-  return Math.floor((20 * Math.random()) + 1);
+  return Math.floor((die * Math.random()) + 1);
 }
 
 function MakeSavingThrow(die, save, check) {
@@ -9,7 +9,7 @@ function MakeSavingThrow(die, save, check) {
   return roll + save > check;
 }
 
-function ApplyDamage(attacker, defender, roll, isCrit) {
+function ApplyDamage(attacker, defender, isCrit) {
   // damage vs aura vs vitality
   var roll = RollDie(attacker['dmg']['die']);
   var damage = attacker['dmg']['mult'] * roll + attacker['dmg']['mod'];
@@ -28,21 +28,21 @@ function ApplyDamage(attacker, defender, roll, isCrit) {
 function CheckMeleeAttack(attacker, defender) {
   var roll = RollDie(attacker['atk']['die']);
   if (roll == 1) return;
-  if (roll >= 20 - attacker['crit']) ApplyDamage(attacker, defender, roll, true);
+  if (roll >= 20 - attacker['crit']) ApplyDamage(attacker, defender, true);
   // attack vs defense
   if (attacker['atk']['mult'] * roll + attacker['atk']['mod'] > defender['def']) {
-    ApplyDamage(attacker, defender, roll, false);
+    ApplyDamage(attacker, defender, false);
   }
 }
 
 function CheckRangedAttack(attacker, defender) {
   var roll = RollDie(attacker['atk']['die']);
   if (roll == 1) return;
-  if (roll >= 20 - attacker['crit']) ApplyDamage(attacker, defender, roll, true);
+  if (roll >= 20 - attacker['crit']) ApplyDamage(attacker, defender, true);
   // attack vs reflex vs defense
   if (!MakeSavingThrow(20, defender['rflx'], 40)) {
     if (attacker['atk']['mult'] * roll + attacker['atk']['mod'] > defender['def']) {
-      ApplyDamage(attacker, defender, roll, false);
+      ApplyDamage(attacker, defender, false);
     }
   }
 }
@@ -79,20 +79,64 @@ function BasicCombat(player, opp) {
   return player['vit'] > 0;
 }
 
-function ComputeDieTemplate(template) {
-  var parts = template.split(' ');
-  return {
-    mult: parts[0],
-    die: parts[2],
-    mod: parts[4]
-  };
+function ModifierOf(attribute) {
+  return Math.floor((attribute - 10) / 2);
+}
+
+function EvaluateTerm(term, builder, level) {
+  if (!isNaN(term)) return parseInt(term);
+  if (term == 'LVL') return level;
+  if (term == 'STR') return ModifierOf(builder['str']);
+  if (term == 'DEX') return ModifierOf(builder['dex']);
+  if (term == 'CONT') return ModifierOf(builder['cont']);
+  if (term == 'INT') return ModifierOf(builder['int']);
+  if (term == 'WIS') return ModifierOf(builder['wis']);
+  if (term == 'CHA') return ModifierOf(builder['cha']);
+  return 0;
+}
+
+function Compute(right, left, op) {
+  if (op == '+') return left + right;
+  if (op == '-') return left - right;
+  if (op == '*') return left * right;
+  if (op == '/') return left / right;
+  return 0;
 }
 
 function ComputeStatTemplate(template, builder, level) {
-  if (typeof template == 'number') {
-    return template;
+  var terms = template.split(' ');
+  var stack = [];
+  var operators = [];
+  for (var t = 0; t < terms.length; t++) {
+    if (terms[t] == '(') {
+      stack.push(terms[t]);
+    } else if (terms[t] == ')') {
+      while (operators[operators.length-1] != '(') {
+        stack.push(Compute(stack.pop(), stack.pop(), operators.pop())); 
+      }
+      operators.pop();
+    } else if (terms[t] == '*' || terms[t] == '/') {
+      var length = operators.length;
+      if (length > 0) {
+        if (operators[length-1] == '*' || operators[length-1] == '/') {
+          stack.push(Compute(stack.pop(), stack.pop(), operators.pop()));
+        }
+      }
+      operators.push(terms[t]);
+    } else if (terms[t] == '+' || terms[t] == '-') {
+      var length = operators.length;
+      if (length > 0 && operators[length-1] != '(') {
+        stack.push(Compute(stack.pop(), stack.pop(), operators.pop()));
+      }
+      operators.push(terms[t]);
+    } else {
+      stack.push(EvaluateTerm(terms[t], builder, level));
+    }
   }
-  return parseInt(template);
+  while (operators.length > 0) {
+    stack.push(Compute(stack.pop(), stack.pop(), operators.pop()));
+  }
+  return stack.pop();
 }
 
 function BuildCharacter(character, level) {
