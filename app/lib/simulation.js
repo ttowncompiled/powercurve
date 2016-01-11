@@ -36,8 +36,40 @@ function CalculateBaseLines(player, opps, params) {
   return results;
 }
 
+function PowerCurve(left, right, params) {
+  var curve = []
+  for (var x = -1 * params['lvl-under']; x <= params['lvl-over']; x++) {
+    var wins = 0;
+    for (var i = 0; i < params['iters']; i++) {
+      var dynamic = BuildCharacter(left, params['lvl'] + x)
+      var static = BuildCharacter(right, params['lvl'])
+      if (BasicCombat(dynamic, static)) {
+        wins++;
+      }
+    }
+    var y = wins / params['iters'];
+    curve.push([x, y]);
+  }
+  return {data: curve, label: left['name'] + ' v ' + right['name']};
+}
+
+function CalculatePowerCurves(player, opps, params) {
+  var results = {data: [], labels: []};
+  opps.forEach(function(o) {
+    var curve = PowerCurve(player, o, params);
+    results['data'].push(curve['data']);
+    results['labels'].push(curve['label']);
+  });
+  return results;
+}
+
 function Simulate(player, opps, params) {
-  return CalculateBaseLines(player, opps, params);
+  var baseLines = CalculateBaseLines(player, opps, params);
+  var powerCurves = CalculatePowerCurves(player, opps, params);
+  return {
+    data: [baseLines['data'].concat(powerCurves['data'])],
+    labels: [baseLines['labels'].concat(powerCurves['labels'])]
+  };
 }
 
 onmessage = function(deps) {
