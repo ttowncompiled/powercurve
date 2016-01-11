@@ -83,7 +83,11 @@ function ModifierOf(attribute) {
   return Math.floor((attribute - 10) / 2);
 }
 
-function EvaluateTerm(term, builder, level) {
+function EvaluateTerm(term, builder, level, die) {
+  if (term[0] == 'd') {
+    die['die'] = parseInt(term.substring(1));
+    return 'die';
+  }
   if (!isNaN(term)) return parseInt(term);
   if (term == 'LVL') return level;
   if (term == 'STR') return ModifierOf(builder['str']);
@@ -95,16 +99,61 @@ function EvaluateTerm(term, builder, level) {
   return 0;
 }
 
-function Compute(right, left, op) {
-  if (op == '+') return left + right;
-  if (op == '-') return left - right;
-  if (op == '*') return left * right;
-  if (op == '/') return left / right;
+function Compute(right, left, op, die) {
+  if (op == '+') {
+    if (left == 'die') {
+      die['mod'] += right;
+      return 'die';
+    }
+    if (right == 'die') {
+      die['mod'] += left;
+      return 'die';
+    }
+    return left + right;
+  }
+  if (op == '-') {
+    if (left == 'die') {
+      die['mod'] -= right;
+      return 'die';
+    }
+    if (right == 'die') {
+      die['mod'] -= left;
+      return 'die';
+    }
+    return left - right
+  };
+  if (op == '*') {
+    if (left == 'die') {
+      die['mod'] *= right;
+      die['mult'] *= right;
+      return 'die';
+    }
+    if (right == 'die') {
+      die['mod'] *= left;
+      die['mult'] *= left;
+      return 'die';
+    }
+    return left * right;
+  }
+  if (op == '/') {
+    if (left == 'die') {
+      die['mod'] *= right;
+      die['mult'] *= right;
+      return 'die';
+    }
+    if (right == 'die') {
+      die['mod'] *= left;
+      die['mult'] *= left;
+      return 'die';
+    }
+    return left / right;
+  }
   return 0;
 }
 
 function ComputeStatTemplate(template, builder, level) {
   var terms = template.split(' ');
+  var die = {mult: 1, die: 0, mod: 0};
   var stack = [];
   var operators = [];
   for (var t = 0; t < terms.length; t++) {
@@ -112,29 +161,29 @@ function ComputeStatTemplate(template, builder, level) {
       stack.push(terms[t]);
     } else if (terms[t] == ')') {
       while (operators[operators.length-1] != '(') {
-        stack.push(Compute(stack.pop(), stack.pop(), operators.pop())); 
+        stack.push(Compute(stack.pop(), stack.pop(), operators.pop(), die)); 
       }
       operators.pop();
     } else if (terms[t] == '*' || terms[t] == '/') {
       var length = operators.length;
       if (length > 0) {
         if (operators[length-1] == '*' || operators[length-1] == '/') {
-          stack.push(Compute(stack.pop(), stack.pop(), operators.pop()));
+          stack.push(Compute(stack.pop(), stack.pop(), operators.pop(), die));
         }
       }
       operators.push(terms[t]);
     } else if (terms[t] == '+' || terms[t] == '-') {
       var length = operators.length;
       if (length > 0 && operators[length-1] != '(') {
-        stack.push(Compute(stack.pop(), stack.pop(), operators.pop()));
+        stack.push(Compute(stack.pop(), stack.pop(), operators.pop(), die));
       }
       operators.push(terms[t]);
     } else {
-      stack.push(EvaluateTerm(terms[t], builder, level));
+      stack.push(EvaluateTerm(terms[t], builder, level), die);
     }
   }
   while (operators.length > 0) {
-    stack.push(Compute(stack.pop(), stack.pop(), operators.pop()));
+    stack.push(Compute(stack.pop(), stack.pop(), operators.pop(), die));
   }
   return stack.pop();
 }
