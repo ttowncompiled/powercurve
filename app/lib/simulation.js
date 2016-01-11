@@ -40,7 +40,7 @@ function CheckRangedAttack(attacker, defender) {
   if (roll == 1) return;
   if (roll >= 20 - attacker['crit']) ApplyDamage(attacker, defender, true);
   // attack vs reflex vs defense
-  if (!MakeSavingThrow(20, defender['rflx'], 40)) {
+  if (true) {
     if (attacker['atk']['mult'] * roll + attacker['atk']['mod'] > defender['def']) {
       ApplyDamage(attacker, defender, false);
     }
