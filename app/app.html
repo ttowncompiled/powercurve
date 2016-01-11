@@ -51,6 +51,50 @@
   
 </div>
 
+<!-- Plot Parameters -->
+<div class="col s2">
+  <div class="card-panel" style="height:80%;">
+    <div class="row">
+      <form class="col s12">
+        
+        <div class="section">
+          <h6>Parameters</h6>
+        </div>
+        
+        <div class="divider"></div>
+        
+        <div class="section">
+          <div class="row">
+            <div class="input-field s12">
+              <input id="iterations" type="text" class="validate" value="100">
+              <label for="iterations" class="active">Iterations</label>
+            </div>
+            <div class="input-field s12">
+              <input id="lvl-under" type="text" class="validate" value="5">
+              <label for="lvl-under" class="active">Level Under</label>
+            </div>
+            <div class="input-field s12">
+              <input id="lvl" type="text" class="validate" value="6">
+              <label for="lvl" class="active">Level</label>
+            </div>
+            <div class="input-field s12">
+              <input id="lvl-over" type="text" class="validate" value="5">
+              <label for="lvl-over" class="active">Level Over</label>
+            </div>
+          </div>
+        </div>
+        
+        <div class="divider"></div>
+        
+        <div class="section">
+          <a href="#" data-activates="slide-out" class="button-collapse">Legend</a>
+        </div>
+        
+      </form>
+    </div>
+  </div>
+</div>
+
 <!-- Character panels -->
 <div *ngFor="#characters of characterRows" class="row">
   
