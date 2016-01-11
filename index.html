@@ -22,63 +22,6 @@
     
     <!-- Load bootstrap file -->
     <script>
-      
-      // DOM function for manipulating the plot
-      function UPDATE_PLOT(annotated_data) {
-        // plots the data
-        $.plot($("#placeholder"),
-            annotated_data,
-            {
-              legend: {
-                container: $("#legend"),
-                noColumns: 2
-              },
-              series: {
-                lines: {
-                  show: true
-                },
-                points: {
-                  show: true
-                }
-              },
-              grid: {
-                hoverable: true,
-                clickable: true
-              },
-              yaxis: {
-                min: 0,
-                max: 1
-              }
-            }
-        );
-
-        // creates the tooltip to display the y point
-        $("<div id='tooltip'></div>").css({
-            position: "absolute",
-            display: "none",
-            border: "1px solid #fdd",
-            padding: "2px",
-            "background-color": "#fee",
-            opacity: 0.80
-        }).appendTo("body");
-
-        // displays the tooltip on hover
-        $("#placeholder").bind("plothover", function (event, pos, item) {
-            if (item) {
-              var x = item.datapoint[0].toFixed(2),
-                y = item.datapoint[1].toFixed(2);
-              $("#tooltip").html(y)
-                .css({top: item.pageY+5, left: item.pageX+5})
-                .fadeIn(200);
-            } else {
-              $("#tooltip").hide();
-            }
-        });
-        
-        // enable side nav for the legend
-        $('.button-collapse').sideNav();
-      }
-      
       // configurations for importing  modules through System.js
       System.config({
         packages: {        
@@ -91,11 +34,11 @@
       
       // import the boot module to bootstrap all of the components
       System.import('app/boot')
-            .then(null, console.error.bind(console));
-            
+            .then(null, console.error.bind(console));      
     </script>
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
   </head>
   
   <body>

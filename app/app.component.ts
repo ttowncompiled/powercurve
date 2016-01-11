@@ -1,10 +1,7 @@
 import {ChangeDetectorRef , Component} from 'angular2/core';
 import {FORM_DIRECTIVES, ControlGroup, FormBuilder} from 'angular2/common';
 import {CharacterComponent} from './character/character.component';
-
-// declare UPDATE_PLOT to be able to use this function 
-// to update the plot with new data
-declare var UPDATE_PLOT;
+import {PlotData} from './lib/plot';
 
 @Component({
   selector: 'my-app',
@@ -67,7 +64,7 @@ export class AppComponent {
     var worker: any = new Worker('app/lib/simulation.js');
     worker.postMessage([this.Player(), this.Opps(), this.params.value]);
     worker.onmessage = (results: any) => {
-      UPDATE_PLOT(results.data);
+      PlotData(results.data);
       this.isLoading = false;
       this.ref.detectChanges();
     }
