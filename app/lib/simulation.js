@@ -2,8 +2,22 @@ function BasicCombat(player, opp) {
   return true;
 }
 
+function ComputeStatTemplate(template, builder, level) {
+  if (typeof template == 'number') {
+    return template;
+  }
+  return parseInt(template);
+}
+
 function BuildCharacter(character, level) {
-  return {}
+  var builder = {};
+  for (var key in character) {
+    if (key != 'team' && key != 'name' && key != 'form') {
+      builder[key] = ComputeStatTemplate(character[key], builder, level);
+    }
+  }
+  builder['form'] = character['form'];
+  return builder;
 }
 
 function BaseLine(character, params) {
