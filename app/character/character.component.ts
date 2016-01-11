@@ -34,7 +34,8 @@ export class CharacterComponent {
       'def': ['0'],
       'atk': ['1 * d1 + 0'],
       'dmg': ['1 * d1 + 0'],
-      'crit': ['0']
+      'crit': ['0'],
+      'cdmg': ['1 * d1 + 0']
     });
     this.Save(this.myForm.value);
   }

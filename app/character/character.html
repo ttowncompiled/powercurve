@@ -144,6 +144,10 @@
             <input [ngFormControl]="myForm.controls['crit']" id="critical_chance" type="text" class="validate">
             <label for="critical_chance" [ngClass]="{active: myForm.controls['crit'].value != ''}">Critical Chance</label>
           </div>
+          <div class="input-field col s12">
+            <input [ngFormControl]="myForm.controls['cdmg']" id="critical_chance" type="text" class="validate">
+            <label for="critical_chance" [ngClass]="{active: myForm.controls['cdmg'].value != ''}">Critical Damage</label>
+          </div>
         </div>
       </div>
       

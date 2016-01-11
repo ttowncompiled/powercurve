@@ -18,6 +18,14 @@ function ApplyDamage(attacker, defender, isCrit) {
     var roll = RollDie(attacker['dmg']['die']);
     damage = attacker['dmg']['mult'] * roll + attacker['dmg']['mod'];
   }
+  if (isCrit) {
+    if (typeof attacker['cdmg'] == 'number') {
+      damage += attacker['cdmg'];
+    } else {
+      var roll = RollDie(attacker['cdmg']['die']);
+      damage += attacker['cdmg']['mult'] * roll + attacker['cdmg']['mod'];
+    }
+  }
   if (damage > defender['ardx']) {
     defender['vit'] -= (damage - defender['ardx']);
     damage = defender['ardx'];
