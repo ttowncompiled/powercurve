@@ -27,7 +27,7 @@ System.register(['angular2/core', 'angular2/common', '../lib/firebase'], functio
                     this.fb = fb;
                     this.fbs = fbs;
                     this.myForm = this.fb.group({
-                        'team': [''],
+                        'team': ['player'],
                         'name': [''],
                         'str': ['10'],
                         'dex': ['10'],
@@ -59,7 +59,7 @@ System.register(['angular2/core', 'angular2/common', '../lib/firebase'], functio
                 CharacterComponent.prototype.ListenForChoice = function () {
                     var _this = this;
                     this.choiceForm.valueChanges.subscribe(function (value) {
-                        if (value['choice'] != '') {
+                        if (value['choice'] != '' && value['choice'] != 'new') {
                             _this.fbs.dataRef.child('characters/' + value['choice']).once('value', function (snapshot) {
                                 _this.UpdateForm(snapshot.val());
                             });
@@ -80,7 +80,7 @@ System.register(['angular2/core', 'angular2/common', '../lib/firebase'], functio
                 };
                 CharacterComponent.prototype.Reset = function () {
                     this.myForm = this.fb.group({
-                        'team': [''],
+                        'team': ['player'],
                         'name': [''],
                         'str': ['10'],
                         'dex': ['10'],
@@ -91,7 +91,7 @@ System.register(['angular2/core', 'angular2/common', '../lib/firebase'], functio
                         'ftd': ['0'],
                         'rflx': ['0'],
                         'will': ['0'],
-                        'vit': ['0'],
+                        'vit': ['1'],
                         'sta': ['0'],
                         'srgn': ['0'],
                         'aura': ['0'],
@@ -108,7 +108,7 @@ System.register(['angular2/core', 'angular2/common', '../lib/firebase'], functio
                 CharacterComponent.prototype.SaveForm = function () {
                     this.PassUp();
                     var character = this.myForm.value;
-                    if (this.myForm.value['name'] != '') {
+                    if (this.choiceForm.value['choice'] != '' && this.myForm.value['name'] != '') {
                         this.fbs.dataRef.child('characters/' + character['name']).update(character);
                     }
                 };

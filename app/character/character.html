@@ -25,6 +25,7 @@
             <form [ngFormModel]="choiceForm">
               <select [ngFormControl]="choiceForm.controls['choice']" class="browser-default">
                 <option value="" selected>Custom</option>
+                <option value="new">New</option>
                 <option *ngFor="#c of choices" [value]="c">{{ c }}</option>
               </select>
             </form>

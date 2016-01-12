@@ -16,7 +16,7 @@ export class CharacterComponent {
   
   constructor(public fb: FormBuilder, public fbs: FirebaseService) {
     this.myForm = this.fb.group({
-      'team': [''],
+      'team': ['player'],
       'name': [''],
       'str': ['10'],
       'dex': ['10'],
@@ -48,7 +48,7 @@ export class CharacterComponent {
   
   ListenForChoice(): void {
     this.choiceForm.valueChanges.subscribe((value: string) => {
-      if (value['choice'] != '') {
+      if (value['choice'] != '' && value['choice'] != 'new') {
         this.fbs.dataRef.child('characters/' + value['choice']).once('value', (snapshot: FirebaseDataSnapshot) => {
           this.UpdateForm(snapshot.val());
         });
@@ -71,7 +71,7 @@ export class CharacterComponent {
   
   Reset(): void {
     this.myForm = this.fb.group({
-      'team': [''],
+      'team': ['player'],
       'name': [''],
       'str': ['10'],
       'dex': ['10'],
@@ -82,7 +82,7 @@ export class CharacterComponent {
       'ftd': ['0'],
       'rflx': ['0'],
       'will': ['0'],
-      'vit': ['0'],
+      'vit': ['1'],
       'sta': ['0'],
       'srgn': ['0'],
       'aura': ['0'],
@@ -100,7 +100,7 @@ export class CharacterComponent {
   SaveForm(): void {
     this.PassUp();
     var character = this.myForm.value;
-    if (this.myForm.value['name'] != '') {
+    if (this.choiceForm.value['choice'] != '' && this.myForm.value['name'] != '') {
       this.fbs.dataRef.child('characters/' + character['name']).update(character);
     }
   }
