@@ -1,6 +1,7 @@
 import {ChangeDetectorRef , Component} from 'angular2/core';
 import {FORM_DIRECTIVES, ControlGroup, FormBuilder} from 'angular2/common';
 import {CharacterComponent} from './character/character.component';
+import {FirebaseService} from './lib/firebase';
 import {PlotData} from './lib/plot';
 
 @Component({
@@ -13,13 +14,17 @@ export class AppComponent {
   characterRows: Array<Array<any>> = [];
   isLoading: boolean = false;
   params: ControlGroup;
+  choices: Array<string> = [];
   
-  constructor(private ref: ChangeDetectorRef, fb: FormBuilder) {
+  constructor(private ref: ChangeDetectorRef, fb: FormBuilder, fs: FirebaseService) {
     this.params = fb.group({
       'iters': [5000],
       'lvl-under': [5],
       'lvl': [6],
       'lvl-over': [5]
+    });
+    fs.dataRef.child('characters').on('value', (snapshot: FirebaseDataSnapshot) => {
+      this.choices = Object.keys(snapshot.val());
     });
   }
   

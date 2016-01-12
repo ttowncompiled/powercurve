@@ -1,7 +1,7 @@
 <div class="card-panel">
   <div class="row">
     
-    <form [ngFormModel]="myForm" (ngSubmit)="Save(myForm.value)" class="col s12">
+    <form [ngFormModel]="myForm" (ngSubmit)="SaveForm()" class="col s12">
       
       <!-- Player select -->
       <div class="section">
@@ -21,6 +21,14 @@
       <!-- Personal info -->
       <div class="section">
         <div class="row">
+          <div class="input-field col s12">
+            <form [ngFormModel]="choiceForm">
+              <select [ngFormControl]="choiceForm.controls['choice']" class="browser-default">
+                <option value="" selected>Custom</option>
+                <option *ngFor="#c of choices" [value]="c">{{ c }}</option>
+              </select>
+            </form>
+          </div>
           <div class="input-field col s12">
             <input [ngFormControl]="myForm.controls['name']" id="name" type="text" class="validate">
             <label for="name" [ngClass]="{active: myForm.controls['name'].value != ''}">Name</label>

@@ -100,7 +100,7 @@
   
   <!-- Character panel -->
   <div *ngFor="#c of characters" class="col s3">
-    <character [char]="c">Loading...</character>
+    <character [char]="c" [choices]="choices">Loading...</character>
   </div>
   
   <!-- New character panel -->

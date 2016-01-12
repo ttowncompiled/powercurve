@@ -1,5 +1,6 @@
 import {Component, Input} from 'angular2/core';
-import {FORM_DIRECTIVES, ControlGroup, FormBuilder} from 'angular2/common';
+import {FORM_DIRECTIVES, Control, ControlGroup, FormBuilder} from 'angular2/common';
+import {FirebaseService} from '../lib/firebase';
 
 @Component({
   selector: 'character',
@@ -9,10 +10,12 @@ import {FORM_DIRECTIVES, ControlGroup, FormBuilder} from 'angular2/common';
 export class CharacterComponent {
   
   @Input() char;
+  @Input() choices;
   myForm: ControlGroup;
+  choiceForm: ControlGroup;
   
-  constructor(fb: FormBuilder) {
-    this.myForm = fb.group({
+  constructor(public fb: FormBuilder, public fbs: FirebaseService) {
+    this.myForm = this.fb.group({
       'team': ['player'],
       'name': [''],
       'str': ['10'],
@@ -37,16 +40,64 @@ export class CharacterComponent {
       'crit': ['0'],
       'cdmg': ['1 * d1 + 0']
     });
+    this.choiceForm = this.fb.group({
+      'choice': ['']
+    });
+    this.ListenForChoice();
+  }
+  
+  ListenForChoice(): void {
+    this.choiceForm.valueChanges.subscribe((value: string) => {
+      if (value != '') {
+        this.fbs.dataRef.child('characters/' + value['choice']).once('value', (snapshot: FirebaseDataSnapshot) => {
+          this.UpdateForm(snapshot.val());
+        });
+      }
+    });
   }
   
   ngOnInit(): void {
-    this.Save(this.myForm.value);
+    this.PassUp();
   }
   
-  Save(formValue: any): void {
-    for (var key in formValue) {
-      this.char[key] = formValue[key];
-    }
+  PassUp(): void {
+    console.log(this.myForm.value);
+    this.char = this.myForm.value;
+  }
+  
+  SaveForm(): void {
+    this.PassUp();
+    var character = this.myForm.value;
+    this.fbs.dataRef.child('characters/' + character['name']).update(character);
+  }
+  
+  UpdateForm(val: any): void {
+    this.myForm = this.fb.group({
+      'team': [val['team']],
+      'name': [val['name']],
+      'str': [val['str']],
+      'dex': [val['dex']],
+      'cont': [val['cont']],
+      'int': [val['int']],
+      'wis': [val['wis']],
+      'cha': [val['cha']],
+      'ftd': [val['ftd']],
+      'rflx': [val['rflx']],
+      'will': [val['will']],
+      'vit': [val['vit']],
+      'sta': [val['sta']],
+      'srgn': [val['srgn']],
+      'aura': [val['aura']],
+      'ardx': [val['ardx']],
+      'argn': [val['argn']],
+      'form': [val['form']],
+      'def': [val['def']],
+      'atk': [val['atk']],
+      'dmg': [val['dmg']],
+      'crit': [val['crit']],
+      'cdmg': [val['cdmg']]
+    });
+    this.PassUp();
   }
   
 }
