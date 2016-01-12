@@ -61,8 +61,10 @@ export class CharacterComponent {
   }
   
   PassUp(): void {
-    console.log(this.myForm.value);
-    this.char = this.myForm.value;
+    // must perform a deep copy
+    for (var key in this.myForm.value) {
+      this.char[key] = this.myForm.value[key];
+    }
   }
   
   SaveForm(): void {

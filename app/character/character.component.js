@@ -59,16 +59,21 @@ System.register(['angular2/core', 'angular2/common', '../lib/firebase'], functio
                 CharacterComponent.prototype.ListenForChoice = function () {
                     var _this = this;
                     this.choiceForm.valueChanges.subscribe(function (value) {
-                        _this.fbs.dataRef.child('characters/' + value['choice']).once('value', function (snapshot) {
-                            _this.UpdateForm(snapshot.val());
-                        });
+                        if (value != '') {
+                            _this.fbs.dataRef.child('characters/' + value['choice']).once('value', function (snapshot) {
+                                _this.UpdateForm(snapshot.val());
+                            });
+                        }
                     });
                 };
                 CharacterComponent.prototype.ngOnInit = function () {
                     this.PassUp();
                 };
                 CharacterComponent.prototype.PassUp = function () {
-                    this.char = this.myForm.value;
+                    // must perform a deep copy
+                    for (var key in this.myForm.value) {
+                        this.char[key] = this.myForm.value[key];
+                    }
                 };
                 CharacterComponent.prototype.SaveForm = function () {
                     this.PassUp();
