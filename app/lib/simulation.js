@@ -40,7 +40,7 @@ function ApplyDamage(attacker, defender, isCrit) {
 
 function MeleeAttack(attacker, defender) {
   if (typeof attacker['atk'] == 'number') {
-    if (attacker['atk']['mult'] > defender['def']) {
+    if (attacker['atk'] > defender['def']) {
       ApplyDamage(attacker, defender, RollDie(20) > 20 - attacker['crit']);
     }
     return;
@@ -56,7 +56,7 @@ function MeleeAttack(attacker, defender) {
 
 function RangedAttack(attacker, defender) {
   if (typeof attacker['atk'] == 'number') {
-    if (attacker['atk']['mult'] > defender['def']) {
+    if (attacker['atk'] > defender['def']) {
       ApplyDamage(attacker, defender, RollDie(20) > 20 - attacker['crit']);
     }
     return;

@@ -16,7 +16,7 @@ export class CharacterComponent {
   
   constructor(public fb: FormBuilder, public fbs: FirebaseService) {
     this.myForm = this.fb.group({
-      'team': ['player'],
+      'team': [''],
       'name': [''],
       'str': ['10'],
       'dex': ['10'],
@@ -27,7 +27,7 @@ export class CharacterComponent {
       'ftd': ['0'],
       'rflx': ['0'],
       'will': ['0'],
-      'vit': ['1'],
+      'vit': ['0'],
       'sta': ['0'],
       'srgn': ['0'],
       'aura': ['0'],
@@ -35,10 +35,10 @@ export class CharacterComponent {
       'argn': ['0'],
       'form': ['melee'],
       'def': ['0'],
-      'atk': ['1 * d4 + 0'],
-      'dmg': ['1 * d4 + 0'],
+      'atk': ['1'],
+      'dmg': ['1'],
       'crit': ['0'],
-      'cdmg': ['1 * d1 + 0']
+      'cdmg': ['1']
     });
     this.choiceForm = this.fb.group({
       'choice': ['']
@@ -48,10 +48,12 @@ export class CharacterComponent {
   
   ListenForChoice(): void {
     this.choiceForm.valueChanges.subscribe((value: string) => {
-      if (value != '') {
+      if (value['choice'] != '') {
         this.fbs.dataRef.child('characters/' + value['choice']).once('value', (snapshot: FirebaseDataSnapshot) => {
           this.UpdateForm(snapshot.val());
         });
+      } else {
+        this.Reset();
       }
     });
   }
@@ -67,10 +69,40 @@ export class CharacterComponent {
     }
   }
   
+  Reset(): void {
+    this.myForm = this.fb.group({
+      'team': [''],
+      'name': [''],
+      'str': ['10'],
+      'dex': ['10'],
+      'cont': ['10'],
+      'int': ['10'],
+      'wis': ['10'],
+      'cha': ['10'],
+      'ftd': ['0'],
+      'rflx': ['0'],
+      'will': ['0'],
+      'vit': ['0'],
+      'sta': ['0'],
+      'srgn': ['0'],
+      'aura': ['0'],
+      'ardx': ['0'],
+      'argn': ['0'],
+      'form': ['melee'],
+      'def': ['0'],
+      'atk': ['1'],
+      'dmg': ['1'],
+      'crit': ['0'],
+      'cdmg': ['1']
+    });
+  }
+  
   SaveForm(): void {
     this.PassUp();
     var character = this.myForm.value;
-    this.fbs.dataRef.child('characters/' + character['name']).update(character);
+    if (this.myForm.value['name'] != '') {
+      this.fbs.dataRef.child('characters/' + character['name']).update(character);
+    }
   }
   
   UpdateForm(val: any): void {

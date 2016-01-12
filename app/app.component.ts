@@ -24,7 +24,9 @@ export class AppComponent {
       'lvl-over': [5]
     });
     fs.dataRef.child('characters').on('value', (snapshot: FirebaseDataSnapshot) => {
-      this.choices = Object.keys(snapshot.val());
+      if (snapshot) {
+        this.choices = Object.keys(snapshot.val());
+      }
     });
   }
   

@@ -42,7 +42,9 @@ System.register(['angular2/core', 'angular2/common', './character/character.comp
                         'lvl-over': [5]
                     });
                     fs.dataRef.child('characters').on('value', function (snapshot) {
-                        _this.choices = Object.keys(snapshot.val());
+                        if (snapshot) {
+                            _this.choices = Object.keys(snapshot.val());
+                        }
                     });
                 }
                 // returns the opponents from the listed characters

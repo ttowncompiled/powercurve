@@ -27,7 +27,7 @@ System.register(['angular2/core', 'angular2/common', '../lib/firebase'], functio
                     this.fb = fb;
                     this.fbs = fbs;
                     this.myForm = this.fb.group({
-                        'team': ['player'],
+                        'team': [''],
                         'name': [''],
                         'str': ['10'],
                         'dex': ['10'],
@@ -38,7 +38,7 @@ System.register(['angular2/core', 'angular2/common', '../lib/firebase'], functio
                         'ftd': ['0'],
                         'rflx': ['0'],
                         'will': ['0'],
-                        'vit': ['1'],
+                        'vit': ['0'],
                         'sta': ['0'],
                         'srgn': ['0'],
                         'aura': ['0'],
@@ -46,10 +46,10 @@ System.register(['angular2/core', 'angular2/common', '../lib/firebase'], functio
                         'argn': ['0'],
                         'form': ['melee'],
                         'def': ['0'],
-                        'atk': ['1 * d4 + 0'],
-                        'dmg': ['1 * d4 + 0'],
+                        'atk': ['1'],
+                        'dmg': ['1'],
                         'crit': ['0'],
-                        'cdmg': ['1 * d1 + 0']
+                        'cdmg': ['1']
                     });
                     this.choiceForm = this.fb.group({
                         'choice': ['']
@@ -59,10 +59,13 @@ System.register(['angular2/core', 'angular2/common', '../lib/firebase'], functio
                 CharacterComponent.prototype.ListenForChoice = function () {
                     var _this = this;
                     this.choiceForm.valueChanges.subscribe(function (value) {
-                        if (value != '') {
+                        if (value['choice'] != '') {
                             _this.fbs.dataRef.child('characters/' + value['choice']).once('value', function (snapshot) {
                                 _this.UpdateForm(snapshot.val());
                             });
+                        }
+                        else {
+                            _this.Reset();
                         }
                     });
                 };
@@ -75,10 +78,39 @@ System.register(['angular2/core', 'angular2/common', '../lib/firebase'], functio
                         this.char[key] = this.myForm.value[key];
                     }
                 };
+                CharacterComponent.prototype.Reset = function () {
+                    this.myForm = this.fb.group({
+                        'team': [''],
+                        'name': [''],
+                        'str': ['10'],
+                        'dex': ['10'],
+                        'cont': ['10'],
+                        'int': ['10'],
+                        'wis': ['10'],
+                        'cha': ['10'],
+                        'ftd': ['0'],
+                        'rflx': ['0'],
+                        'will': ['0'],
+                        'vit': ['0'],
+                        'sta': ['0'],
+                        'srgn': ['0'],
+                        'aura': ['0'],
+                        'ardx': ['0'],
+                        'argn': ['0'],
+                        'form': ['melee'],
+                        'def': ['0'],
+                        'atk': ['1'],
+                        'dmg': ['1'],
+                        'crit': ['0'],
+                        'cdmg': ['1']
+                    });
+                };
                 CharacterComponent.prototype.SaveForm = function () {
                     this.PassUp();
                     var character = this.myForm.value;
-                    this.fbs.dataRef.child('characters/' + character['name']).update(character);
+                    if (this.myForm.value['name'] != '') {
+                        this.fbs.dataRef.child('characters/' + character['name']).update(character);
+                    }
                 };
                 CharacterComponent.prototype.UpdateForm = function (val) {
                     this.myForm = this.fb.group({
