@@ -24,19 +24,22 @@ export class CharacterComponent {
       'ftd': ['0'],
       'rflx': ['0'],
       'will': ['0'],
-      'vit': ['10'],
-      'sta': ['10'],
-      'srgn': ['1'],
-      'aura': ['10'],
-      'ardx': ['1'],
-      'argn': ['1'],
+      'vit': ['1'],
+      'sta': ['0'],
+      'srgn': ['0'],
+      'aura': ['0'],
+      'ardx': ['0'],
+      'argn': ['0'],
       'form': ['melee'],
       'def': ['0'],
-      'atk': ['1 * d1 + 0'],
-      'dmg': ['1 * d1 + 0'],
+      'atk': ['1 * d4 + 0'],
+      'dmg': ['1 * d4 + 0'],
       'crit': ['0'],
       'cdmg': ['1 * d1 + 0']
     });
+  }
+  
+  ngOnInit(): void {
     this.Save(this.myForm.value);
   }
   
