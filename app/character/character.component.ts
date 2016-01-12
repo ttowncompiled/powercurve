@@ -38,7 +38,7 @@ export class CharacterComponent {
       'atk': ['1'],
       'dmg': ['1'],
       'crit': ['0'],
-      'cdmg': ['1']
+      'cdmg': ['0']
     });
     this.choiceForm = this.fb.group({
       'choice': ['']
@@ -93,7 +93,7 @@ export class CharacterComponent {
       'atk': ['1'],
       'dmg': ['1'],
       'crit': ['0'],
-      'cdmg': ['1']
+      'cdmg': ['0']
     });
   }
   

@@ -49,7 +49,7 @@ System.register(['angular2/core', 'angular2/common', '../lib/firebase'], functio
                         'atk': ['1'],
                         'dmg': ['1'],
                         'crit': ['0'],
-                        'cdmg': ['1']
+                        'cdmg': ['0']
                     });
                     this.choiceForm = this.fb.group({
                         'choice': ['']
@@ -102,7 +102,7 @@ System.register(['angular2/core', 'angular2/common', '../lib/firebase'], functio
                         'atk': ['1'],
                         'dmg': ['1'],
                         'crit': ['0'],
-                        'cdmg': ['1']
+                        'cdmg': ['0']
                     });
                 };
                 CharacterComponent.prototype.SaveForm = function () {

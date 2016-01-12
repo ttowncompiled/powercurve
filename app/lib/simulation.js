@@ -5,7 +5,7 @@ function RollDie(die) {
 function MakeSavingThrow(die, save, check) {
   var roll = RollDie(die);
   if (roll == 1) return false;
-  if (roll == 20) return true;
+  if (roll == die) return true;
   return roll + save > check;
 }
 
@@ -47,7 +47,9 @@ function MeleeAttack(attacker, defender) {
   }
   var roll = RollDie(attacker['atk']['die']);
   if (roll == 1) return;
-  if (roll >= 20 - attacker['crit']) ApplyDamage(attacker, defender, true);
+  if (roll > attacker['atk']['die'] - attacker['crit']) {
+    ApplyDamage(attacker, defender, true);
+  }
   // attack vs defense
   if (attacker['atk']['mult'] * roll + attacker['atk']['mod'] > defender['def']) {
     ApplyDamage(attacker, defender, false);
@@ -63,7 +65,9 @@ function RangedAttack(attacker, defender) {
   }
   var roll = RollDie(attacker['atk']['die']);
   if (roll == 1) return;
-  if (roll >= 20 - attacker['crit']) ApplyDamage(attacker, defender, true);
+  if (roll > attacker['atk']['die'] - attacker['crit']) {
+    ApplyDamage(attacker, defender, true);
+  }
   // attack vs reflex vs defense
   if (true) {
     if (attacker['atk']['mult'] * roll + attacker['atk']['mod'] > defender['def']) {
