@@ -187,7 +187,7 @@ function ComputeStatTemplate(template, builder, level) {
   var operators = [];
   for (var t = 0; t < terms.length; t++) {
     if (terms[t] == '(') {
-      stack.push(terms[t]);
+      operators.push(terms[t]);
     } else if (terms[t] == ')') {
       while (operators[operators.length-1] != '(') {
         stack.push(Compute(stack.pop(), stack.pop(), operators.pop(), die)); 
